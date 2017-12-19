@@ -26,10 +26,12 @@ export class AppComponent {
     }
 
     ngAfterViewChecked() {
-        if (app.ios) {
-            const uptime = (<any>global).__tns_uptime;
-            this.uptime = uptime();
-            console.log("Startup time: " + this.uptime + "ms.");
+        if (app.ios && !this.uptime) {
+            const uptime = (<any>global).__tns_uptime() + "ms.";
+            setTimeout(() => {
+                this.uptime = uptime;
+                console.log("Startup time: " + this.uptime + "ms.");
+            }, 0);
         }
     }
 }
